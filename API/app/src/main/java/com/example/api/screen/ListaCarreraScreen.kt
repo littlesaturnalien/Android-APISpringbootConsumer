@@ -12,24 +12,31 @@ import com.example.api.models.Carrera
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ListaCarrerasScreen(viewModel: CarreraViewModel = viewModel()) {
+fun ListaCarreraScreen(viewModel: CarreraViewModel = viewModel()) {
     val carreras = viewModel.carreras
     val isLoading = viewModel.isLoading
     val error = viewModel.errorMessage
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Carreras Disponibles",
+            style = MaterialTheme.typography.headlineSmall
+        )
 
-        Text("Carreras Disponibles", style = MaterialTheme.typography.headlineSmall)
-
-        if (isLoading) {
+        if (isLoading.value) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-        } else if (error != null) {
-            Text("Error: $error", color = MaterialTheme.colorScheme.error)
+        } else if (error.value != null) {
+            Text(
+                text = "Error: ${error.value}",
+                color = MaterialTheme.colorScheme.error
+            )
         } else {
             LazyColumn {
-                items(carreras) { carrera ->
+                items(carreras.value) { carrera ->
                     CarreraCard(carrera)
                 }
             }
@@ -43,12 +50,12 @@ fun CarreraCard(carrera: Carrera) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text("ID: ${carrera.id}")
-            Text("Nombre: ${carrera.nombre}")
-            Text("Descripción: ${carrera.descripcion}")
+            Text(text = "ID: ${carrera.id}")
+            Text(text = "Nombre: ${carrera.nombre}")
+            Text(text = "Descripción: ${carrera.descripcion}")
         }
     }
 }
