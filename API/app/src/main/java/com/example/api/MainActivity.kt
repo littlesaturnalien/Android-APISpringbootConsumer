@@ -11,6 +11,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.api.screen.ListaCarreraScreen
 import com.example.api.screen.AgregarCarreraScreen
 import com.example.api.ui.theme.APITheme
+import androidx.compose.ui.graphics.Color
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
@@ -28,14 +30,20 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text("Carreras") },
                             actions = {
-                                TextButton(onClick = {
-                                    pantallaActual = if (pantallaActual == "lista") "agregar" else "lista"
-                                }) {
+                                TextButton(
+                                    onClick = {
+                                        pantallaActual = if (pantallaActual == "lista") "agregar" else "lista"
+                                    },
+                                    colors = ButtonDefaults.textButtonColors(
+                                        containerColor = Color(0xFF3700B3) // Fondo morado oscuro
+                                    )
+                                ) {
                                     Text(
-                                        if (pantallaActual == "lista") "Agregar" else "Volver",
-                                        color = MaterialTheme.colorScheme.onPrimary
+                                        text = if (pantallaActual == "lista") "Agregar" else "Volver",
+                                        color = MaterialTheme.colorScheme.onPrimary // Texto blanco o claro
                                     )
                                 }
+
                             }
                         )
                     }
